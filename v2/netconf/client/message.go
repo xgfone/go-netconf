@@ -142,7 +142,11 @@ func (si *sesImpl) ExecuteAsync(req common.Request, rchan chan *common.RPCReply)
 func (si *sesImpl) execute(req common.Request, rchan chan *common.RPCReply) (err error) {
 
 	// Build the request to be submitted.
-	msg := &common.RPCMessage{MessageID: uuid.NewV4().String(), Union: common.GetUnion(req)}
+	msg := &common.RPCMessage{
+		MessageID: uuid.NewV4().String(),
+		XMLNSXC:   si.cfg.XMLNSXC,
+		Union:     common.GetUnion(req),
+	}
 
 	// Lock the request channel, so the request and response channel set up is atomic.
 	si.reqLock.Lock()

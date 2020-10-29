@@ -21,6 +21,7 @@ type HelloMessage struct {
 type RPCMessage struct {
 	XMLName   xml.Name `xml:"urn:ietf:params:xml:ns:netconf:base:1.0 rpc"`
 	MessageID string   `xml:"message-id,attr"`
+	XMLNSXC   string   `xml:"xmlns:xc,attr,omitempty"`
 	*Union
 }
 

@@ -6,6 +6,9 @@ package client
 type Config struct {
 	// Defines the time in seconds that the client will wait to receive a hello message from the server.
 	SetupTimeoutSecs int
+
+	// XMLNSXC is used to set the field XMLNSXC of RPCMessage.
+	XMLNSXC string
 }
 
 var DefaultConfig = &Config{
