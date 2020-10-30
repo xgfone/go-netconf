@@ -19,9 +19,9 @@ type HelloMessage struct {
 
 // RPCMessage defines an rpc request message
 type RPCMessage struct {
-	XMLName   xml.Name `xml:"urn:ietf:params:xml:ns:netconf:base:1.0 rpc"`
-	MessageID string   `xml:"message-id,attr"`
-	XMLNSXC   string   `xml:"xmlns:xc,attr,omitempty"`
+	XMLName   xml.Name            `xml:"urn:ietf:params:xml:ns:netconf:base:1.0 rpc"`
+	MessageID string              `xml:"message-id,attr"`
+	Attrs     []xml.MarshalerAttr `xml:",attr"`
 	*Union
 }
 
@@ -76,6 +76,20 @@ func GetUnion(s interface{}) *Union {
 	default:
 		return &Union{ValueStr: request}
 	}
+}
+
+// Attr is used to implement the attribute of the XML element.
+type Attr struct {
+	Name  string
+	Value string
+}
+
+// NewAttr returns a new Attr。
+func NewAttr(name, value string) Attr { return Attr{Name: name, Value: value} }
+
+// MarshalXMLAttr implements the interface xml.MarshalerAttr.
+func (a Attr) MarshalXMLAttr(name xml.Name) (attr xml.Attr, err error) {
+	return xml.Attr{Name: xml.Name{Local: a.Name}, Value: a.Value}, nil
 }
 
 // DefaultCapabilities sets the default capabilities of the client library
